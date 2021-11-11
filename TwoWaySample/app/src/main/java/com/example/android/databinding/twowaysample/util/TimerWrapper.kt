@@ -25,13 +25,19 @@ import java.util.*
  * test implementation.
  */
 interface Timer {
-
+    // 重置
     fun reset()
+    // 开始
     fun start(task: TimerTask)
+    // 获取经过的时间
     fun getElapsedTime(): Long
+    // 更新暂停时间
     fun updatePausedTime()
+    // 获取暂停时间
     fun getPausedTime() : Long
+    // 重置开始时间
     fun resetStartTime()
+    // 重置暂停时间
     fun resetPauseTime()
 }
 
@@ -40,7 +46,7 @@ interface Timer {
  */
 object DefaultTimer : Timer {
 
-    private const val TIMER_PERIOD_MS = 100L
+    private const val TIMER_PERIOD_MS = 100L // 定时器周期
 
     private var startTime = System.currentTimeMillis()
     private var pauseTime = 0L

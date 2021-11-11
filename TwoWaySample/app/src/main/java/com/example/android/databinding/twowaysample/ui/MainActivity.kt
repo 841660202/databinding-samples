@@ -44,24 +44,21 @@ const val SHARED_PREFS_KEY = "timer"
 class MainActivity : AppCompatActivity() {
 
     private val intervalTimerViewModel: IntervalTimerViewModel
-        by lazy {
-            ViewModelProviders.of(this, IntervalTimerViewModelFactory)
+            by lazy {
+                ViewModelProviders.of(this, IntervalTimerViewModelFactory)
                     .get(IntervalTimerViewModel::class.java)
-        }
+            }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: IntervalTimerBinding = DataBindingUtil.setContentView(
-                this, R.layout.interval_timer)
+        val binding: IntervalTimerBinding = DataBindingUtil.setContentView(this, R.layout.interval_timer)
         val viewmodel = intervalTimerViewModel
         binding.viewmodel = viewmodel
 
         /* Save the user settings whenever they change */
-        observeAndSaveTimePerSet(
-                viewmodel.timePerWorkSet, R.string.prefs_timePerWorkSet)
-        observeAndSaveTimePerSet(
-                viewmodel.timePerRestSet, R.string.prefs_timePerRestSet)
+        observeAndSaveTimePerSet(viewmodel.timePerWorkSet, R.string.prefs_timePerWorkSet)
+        observeAndSaveTimePerSet(viewmodel.timePerRestSet, R.string.prefs_timePerRestSet)
 
         /* Number of sets needs a different  */
         observeAndSaveNumberOfSets(viewmodel)
@@ -75,23 +72,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeAndSaveTimePerSet(timePerWorkSet: ObservableInt, prefsKey: Int) {
         timePerWorkSet.addOnPropertyChangedCallback(
-                object : Observable.OnPropertyChangedCallback() {
-            @SuppressLint("CommitPrefEdits")
-            override fun onPropertyChanged(observable: Observable?, p1: Int) {
-                Log.d("saveTimePerWorkSet", "Saving time-per-set preference")
-                val sharedPref =
-                        getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE) ?: return
-                sharedPref.edit().apply {
-                    putInt(getString(prefsKey), (observable as ObservableInt).get())
-                    commit()
+            object : Observable.OnPropertyChangedCallback() {
+                @SuppressLint("CommitPrefEdits")
+                override fun onPropertyChanged(observable: Observable?, p1: Int) {
+                    Log.d("saveTimePerWorkSet", "Saving time-per-set preference")
+                    val sharedPref = getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE) ?: return
+                    sharedPref.edit().apply {
+                        putInt(getString(prefsKey), (observable as ObservableInt).get())
+                        commit()
+                    }
                 }
-            }
-        })
+            })
     }
 
     private fun restorePreferences(viewModel: IntervalTimerViewModel) {
-        val sharedPref =
-                getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE) ?: return
+        val sharedPref = getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE) ?: return
         val timePerWorkSetKey = getString(R.string.prefs_timePerWorkSet)
         var wasAnythingRestored = false
         if (sharedPref.contains(timePerWorkSetKey)) {
@@ -118,8 +113,8 @@ class MainActivity : AppCompatActivity() {
             override fun onPropertyChanged(observable: Observable?, p1: Int) {
                 if (p1 == BR.numberOfSets) {
                     Log.d("saveTimePerWorkSet", "Saving number of sets preference")
-                    val sharedPref =
-                            getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE) ?: return
+                    /**第一个参数是存储时的名称，第二个参数则是文件的打开方式~*/
+                    val sharedPref = getSharedPreferences(SHARED_PREFS_KEY, Context.MODE_PRIVATE) ?: return
                     sharedPref.edit().apply {
                         putInt(getString(R.string.prefs_numberOfSets), viewModel.numberOfSets[1])
                         commit()

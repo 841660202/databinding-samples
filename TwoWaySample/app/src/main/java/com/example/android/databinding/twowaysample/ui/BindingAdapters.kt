@@ -30,9 +30,9 @@ import com.example.android.databinding.twowaysample.R
 
 /**
  * A collection of [BindingAdapter]s for different UI-related tasks.
- *
+ * 用于不同UI相关任务的[BindingAdapter]集合。
  * In Kotlin you can write the Binding Adapters in the traditional way:
- *
+ * 在Kotlin中，您可以用传统方式编写绑定适配器：
  * ```
  * @BindingAdapter("property")
  * @JvmStatic fun propertyMethod(view: ViewClass, parameter1: Param1, parameter2: Param2...)
@@ -46,7 +46,7 @@ import com.example.android.databinding.twowaysample.R
  * ```
  *
  * See [EditText.clearTextOnFocus].
- *
+ * 另外，请记住，只有【在类或对象内定义方法时】才需要@JvmStatic。考虑将绑定适配器移动到文件的顶层。
  * Also, keep in mind that @JvmStatic is only necessary if you define the methods inside a class or
  * object. Consider moving the Binding Adapters to the top level of the file.
  */
@@ -61,6 +61,7 @@ object BindingAdapters {
      *
      * @see [clearTextOnFocus] for a version without a listener.
      */
+    // 在聚焦和销毁时候清理
     @BindingAdapter("clearOnFocusAndDispatch")
     @JvmStatic fun clearOnFocusAndDispatch(view: EditText, listener: View.OnFocusChangeListener?) {
         view.onFocusChangeListener = View.OnFocusChangeListener { focusedView, hasFocus ->
@@ -81,9 +82,9 @@ object BindingAdapters {
     }
 
     /**
-     * Clears the text on focus.
+     * Clears the text on focus. 当聚焦清理文本
      *
-     * This method is using extension functions. It's equivalent to:
+     * This method is using extension functions. It's equivalent to: // 等效
      * ```
      * @JvmStatic fun clearTextOnFocus(view: EditText, enabled: Boolean)...
      * ```
@@ -134,6 +135,7 @@ object BindingAdapters {
 
     /**
      * Makes the View [View.INVISIBLE] unless the condition is met.
+     * 使视图[视图.不可见]，除非满足条件。
      */
     @Suppress("unused")
     @BindingAdapter("invisibleUnless")
@@ -143,6 +145,7 @@ object BindingAdapters {
 
     /**
      * Makes the View [View.GONE] unless the condition is met.
+     * 除非满足条件，否则将创建视图[View.GONE]。
      */
     @Suppress("unused")
     @BindingAdapter("goneUnless")
@@ -153,8 +156,10 @@ object BindingAdapters {
     /**
      * In [ProgressBar], [ProgressBar.setMax] must be called before [ProgressBar.setProgress].
      * By grouping both attributes in a BindingAdapter we can make sure the order is met.
+     * 通过在BindingAdapter中对这两个属性进行分组，我们可以确保满足顺序。
      *
      * Also, this showcases how to deal with multiple API levels.
+     * 此外，本文还展示了如何处理多个API级别。
      */
     @BindingAdapter(value=["android:max", "android:progress"], requireAll = true)
     @JvmStatic fun updateProgress(progressBar: ProgressBar, max: Int, progress: Int) {
@@ -165,7 +170,7 @@ object BindingAdapters {
             progressBar.progress = progress
         }
     }
-
+    // 失去焦点
     @BindingAdapter("loseFocusWhen")
     @JvmStatic fun loseFocusWhen(view: EditText, condition: Boolean) {
         if (condition) view.clearFocus()

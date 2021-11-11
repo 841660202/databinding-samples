@@ -17,9 +17,9 @@
 package com.example.android.databinding.twowaysample.util
 
 import kotlin.math.round
-
+// 数字转化成 分:秒
 fun fromTenthsToSeconds(tenths: Int) : String {
-    return if (tenths < 600) {
+    return if (tenths < 600) { // tenths 十分之一
         String.format("%.1f", tenths / 10.0)
     } else {
         val minutes = (tenths / 10) / 60
@@ -27,13 +27,13 @@ fun fromTenthsToSeconds(tenths: Int) : String {
         String.format("%d:%02d", minutes, seconds)
     }
 }
-
+// 清洗秒数符串
 fun cleanSecondsString(seconds: String): Int {
     // Remove letters and other characters
     val filteredValue = seconds.replace(Regex("""[^\d:.]"""), "")
     if (filteredValue.isEmpty()) return 0
     val elements: List<Int> = filteredValue.split(":").map { it -> round(it.toDouble()).toInt() }
-
+// 分钟：秒钟
     var result: Int
     return when {
         elements.size > 2 -> 0

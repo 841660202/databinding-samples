@@ -27,7 +27,7 @@ import androidx.databinding.PropertyChangeRegistry
 open class ObservableViewModel : ViewModel(), Observable {
 
     private val callbacks: PropertyChangeRegistry by lazy { PropertyChangeRegistry() }
-
+//   监听对象属性改变监听
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
         callbacks.add(callback)
     }
@@ -37,6 +37,7 @@ open class ObservableViewModel : ViewModel(), Observable {
     }
 
     /**
+     * 通知侦听器此实例的所有属性都已更改。
      * Notifies listeners that all properties of this instance have changed.
      */
     @Suppress("unused")
@@ -45,6 +46,7 @@ open class ObservableViewModel : ViewModel(), Observable {
     }
 
     /**
+     * 通知侦听器特定属性已更改。更改的属性的getter应标记为[Bindable]，以在'BR'中生成用作'fieldId'的字段。
      * Notifies listeners that a specific property has changed. The getter for the property
      * that changes should be marked with [Bindable] to generate a field in
      * `BR` to be used as `fieldId`.
