@@ -103,6 +103,7 @@ object BindingAdapters {
      *
      * Note that there can only be one [TextView.OnEditorActionListener] on each [EditText] and
      * this [BindingAdapter] sets it.
+     * 请注意，每个[EditText]上只能有一个[TextView.OnEditorActionListener]，此[BindingAdapter]会设置它。
      */
     @BindingAdapter("hideKeyboardOnInputDone")
     @JvmStatic fun hideKeyboardOnInputDone(view: EditText, enabled: Boolean) {
@@ -120,6 +121,7 @@ object BindingAdapters {
     }
 
     /*
+     * 您可以创建自己的绑定适配器，使布局更易于阅读，而不是在XML布局中使用if-else语句。
      * Instead of having if-else statements in the XML layout, you can create your own binding
      * adapters, making the layout easier to read.
      *
